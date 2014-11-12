@@ -1,0 +1,15 @@
+{
+  "name": "lqdi/laravel-login",
+  "description": "Login interface",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Anderson Mota",
+      "email": "anderson.mota@lqdi.net"
+    }
+  ],
+  "require": {
+    "cartalyst/sentry": "~2.1"
+  }
+}
