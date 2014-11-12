@@ -19,14 +19,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
         $this->package('lqdi/laravel-login', 'laravel-login', __DIR__);
         $this->app['config']->package('lqdi/laravel-login', __DIR__ . '/config');
 
-        $this->app['router']->get('login', array('as' => 'authenticate', 'uses' => 'Lqdi\\LoginLaravel\\Controllers\\AuthenticateController@index'));
-        $this->app['router']->post('login', array('as' => 'authenticate', 'uses' => 'Lqdi\\LoginLaravel\\Controllers\\AuthenticateController@in'));
+        $this->app['router']->get('login', array('as' => 'authenticate', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@index'));
+        $this->app['router']->post('login', array('as' => 'authenticate', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@in'));
 
-        $this->app['router']->get('forgot', array('as' => 'authenticate.forgot', 'uses' => 'Lqdi\\LoginLaravel\\Controllers\\AuthenticateController@forgot'));
-        $this->app['router']->post('forgot', array('as' => 'authenticate.forgot', 'uses' => 'Lqdi\\LoginLaravel\\Controllers\\AuthenticateController@sendResetPasswordCode'));
+        $this->app['router']->get('forgot', array('as' => 'authenticate.forgot', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@forgot'));
+        $this->app['router']->post('forgot', array('as' => 'authenticate.forgot', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@sendResetPasswordCode'));
 
-        $this->app['router']->get('password/reset/{token}', array('as' => 'authenticate.recover', 'uses' => 'Lqdi\\LoginLaravel\\Controllers\\AuthenticateController@defineNewPassword'));
-        $this->app['router']->post('password/reset/{token}', array('as' => 'authenticate.recover', 'uses' => 'Lqdi\\LoginLaravel\\Controllers\\AuthenticateController@updatePassword'));
+        $this->app['router']->get('password/reset/{token}', array('as' => 'authenticate.recover', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@defineNewPassword'));
+        $this->app['router']->post('password/reset/{token}', array('as' => 'authenticate.recover', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@updatePassword'));
 
         $this->app['router']->group(array('before' => 'auth.admin'), function() {
             $this->app['router']->get('/', $this->app['config']->get('laravel-login::config.action_root_authenticated'));
