@@ -21,7 +21,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
     {
         $this->package('lqdi/laravel-login', 'laravel-login', __DIR__);
         $this->app['config']->package('lqdi/laravel-login', __DIR__ . '/config');
-        View::addNamespace('laravel-login', __DIR__ . '/resources/views');
+        View::addNamespace('laravel-login', __DIR__ . '/views');
         Lang::addNamespace('laravel-login', __DIR__ . '/lang');
 
 

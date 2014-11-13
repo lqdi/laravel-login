@@ -148,8 +148,8 @@ class AuthenticateController extends Controller {
 
             Mail::send('laravel-login::emails.reminder', array('token' => $token), function(Message $message) use ($email, $user)
             {
-                $message->to($email, $user->first_name)
-                        ->subject(Lang::get('laravel-login::labels.mail_subject_recover_password', array('app_name' => Config::get('app.app_name'))));
+                $message->to($email)
+                        ->subject(Lang::get('laravel-login::labels.mail_subject_recover_password', array('app_name' => Config::get('laravel-login::app_name'))));
             });
 
             return Redirect::route('authenticate')->with('message', Lang::get('laravel-login::messages.success_send_recover_code'));
@@ -166,7 +166,7 @@ class AuthenticateController extends Controller {
      */
     public function defineNewPassword($token)
     {
-        $user = Sentry::findUserByResetPasswordCode($token);
+        $user = (new Sentry)->findUserByResetPasswordCode($token);
 
         if (empty($user)) {
             return Redirect::route('authenticate');

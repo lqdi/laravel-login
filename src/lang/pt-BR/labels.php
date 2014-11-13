@@ -9,6 +9,7 @@
  */
 
 return array(
+    'login_title'    => 'Área Restrita',
     'cancel'         => 'Cancelar',
     'save'           => 'Salvar',
     'edit'           => 'Editar',

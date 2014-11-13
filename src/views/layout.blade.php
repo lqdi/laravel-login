@@ -10,8 +10,8 @@
 
         <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
 
-        <link rel="stylesheet" href="{{asset("assets/css/main.min.css")}}">
-        <script src="{{asset("components/modernizr/modernizr.js")}}"></script>
+        <link rel="stylesheet" href="{{asset("packages/lqdi/laravel-login/assets/css/main.css")}}">
+        <script src="{{asset("packages/lqdi/laravel-login/components/modernizr/modernizr.js")}}"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -19,13 +19,18 @@
         <![endif]-->
         <div class="container">
             <div class="row">
-                <div class="large-6 large-centered columns">
+                <div class="col-lg-4 col-centered">
                     @include('laravel-login::partials.messages')
                 </div>
             </div>
-            @yield('laravel-login::content')
+            <div class="row">
+                <div class="col-lg-4 col-centered">
+                    @yield('laravel-login::content')
+                </div>
+            </div>
         </div>
 
-        <script src="{{asset("assets/js/main.min.js")}}"></script>
+        <script src="{{asset("packages/lqdi/laravel-login/assets/components/jquery/dist/jquery.min.js")}}"></script>
+        <script src="{{asset("packages/lqdi/laravel-login/assets/components/bootstrap-sass-twbs/assets/javascripts/bootstrap.js")}}"></script>
     </body>
 </html>

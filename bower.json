@@ -1,0 +1,20 @@
+{
+  "name": "laravel-login",
+  "version": "1.0.0",
+  "homepage": "https://github.com/lqdi/laravel-login",
+  "authors": [
+    "Anderson Mota <anderson.mota@lqdi.net>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.2.0",
+    "bootstrap-sass-twbs": "~3.3.1"
+  }
+}
