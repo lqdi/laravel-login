@@ -24,20 +24,20 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Cartalyst\Sentry\Sentry;
-use Illuminate\Validation\Validator;
-use Illuminate\View\View;
-use User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
+use Cartalyst\Sentry\Users\Eloquent\User;
 
 class AuthenticateController extends Controller {
 
-    protected $layout = 'layout';
+    protected $layout = 'laravel-login::layout';
 
     public function __construct()
     {
-        View::share('seoTitle', Lang::get('labels.authenticate') . " | " . Config::get('app.app_name'));
-        View::share('authUser', Sentry::getUser());
+        View::share('laravel-login::seoTitle', Lang::get('laravel-login::labels.authenticate') . " | " . Config::get('app.app_name'));
+        View::share('laravel-login::authUser', Sentry::getUser());
     }
 
     /**
@@ -57,7 +57,7 @@ class AuthenticateController extends Controller {
      */
     public function index()
     {
-        return View::make('authenticate.index');
+        return View::make('laravel-login::index');
     }
 
     /**
@@ -85,35 +85,35 @@ class AuthenticateController extends Controller {
         }
         catch (LoginRequiredException $e)
         {
-            $message = Lang::get('labels.Login_field_is_required');
+            $message = Lang::get('laravel-login::labels.Login_field_is_required');
         }
         catch (PasswordRequiredException $e)
         {
-            $message = Lang::get('labels.password_field_is_required');
+            $message = Lang::get('laravel-login::labels.password_field_is_required');
         }
         catch (WrongPasswordException $e)
         {
-            $message = Lang::get('labels.wrong_password_try_again');
+            $message = Lang::get('laravel-login::labels.wrong_password_try_again');
         }
         catch (UserNotFoundException $e)
         {
-            $message = Lang::get('labels.user_was_not_found');
+            $message = Lang::get('laravel-login::labels.user_was_not_found');
         }
         catch (UserNotActivatedException $e)
         {
-            $message = Lang::get('labels.user_is_not_activated');
+            $message = Lang::get('laravel-login::labels.user_is_not_activated');
         }
         catch (UserSuspendedException $e)
         {
-            $message = Lang::get('labels.user_is_suspended');
+            $message = Lang::get('laravel-login::labels.user_is_suspended');
         }
         catch (UserBannedException $e)
         {
-            $message = Lang::get('labels.user_is_banned');
+            $message = Lang::get('laravel-login::labels.user_is_banned');
         }
         catch (\Exception $e)
         {
-            $message = Lang::get('labels.authentication_error');
+            $message = Lang::get('laravel-login::labels.authentication_error');
         }
 
         return Redirect::route('authenticate')->with('message', $message);
@@ -147,17 +147,17 @@ class AuthenticateController extends Controller {
             $user = Sentry::findUserByLogin($email);
             $token = $user->getResetPasswordCode();
 
-            Mail::send('emails.auth.reminder', array('token' => $token), function(Message $message) use ($email, $user)
+            Mail::send('laravel-login::emails.reminder', array('token' => $token), function(Message $message) use ($email, $user)
             {
                 $message->to($email, $user->first_name)
-                        ->subject(Lang::get('labels.mail_subject_recover_password', array('app_name' => Config::get('app.app_name'))));
+                        ->subject(Lang::get('laravel-login::labels.mail_subject_recover_password', array('app_name' => Config::get('app.app_name'))));
             });
 
-            return Redirect::route('authenticate')->with('message', Lang::get('messages.success_send_recover_code'));
+            return Redirect::route('authenticate')->with('message', Lang::get('laravel-login::messages.success_send_recover_code'));
         }
         catch (UserNotFoundException $e)
         {
-            return Redirect::route('authenticate.forgot')->withErrors(Lang::get('exceptions.user_could_not_be_found', ['email' => $email]));
+            return Redirect::route('authenticate.forgot')->withErrors(Lang::get('laravel-login::exceptions.user_could_not_be_found', ['email' => $email]));
         }
     }
 
@@ -173,7 +173,7 @@ class AuthenticateController extends Controller {
             return Redirect::route('authenticate');
         }
 
-        return View::make('authenticate.recover');
+        return View::make('laravel-login::recover');
     }
 
     /**
@@ -200,14 +200,14 @@ class AuthenticateController extends Controller {
 
             if (!$user->attemptResetPassword($token, Input::get('password')))
             {
-                return Redirect::route('authenticate.recover', [$token])->withErrors(Lang::get('messages.error_update_password'));
+                return Redirect::route('authenticate.recover', [$token])->withErrors(Lang::get('laravel-login::messages.error_update_password'));
             }
         }
         catch (UserNotFoundException $e)
         {
-            return Redirect::route('authenticate')->withErrors(Lang::get('exceptions.code_could_not_be_found'));
+            return Redirect::route('authenticate')->withErrors(Lang::get('laravel-login::exceptions.code_could_not_be_found'));
         }
 
-        return Redirect::route('authenticate')->with('message', Lang::get('messages.success_recover_password'));
+        return Redirect::route('authenticate')->with('message', Lang::get('laravel-login::messages.success_recover_password'));
     }
 }
