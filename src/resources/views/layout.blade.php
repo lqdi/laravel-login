@@ -20,10 +20,10 @@
         <div class="container">
             <div class="row">
                 <div class="large-6 large-centered columns">
-                    @include('partials.messages')
+                    @include('laravel-login::partials.messages')
                 </div>
             </div>
-            @yield('content')
+            @yield('laravel-login::content')
         </div>
 
         <script src="{{asset("assets/js/main.min.js")}}"></script>

@@ -1,6 +1,6 @@
 {{-- Created by anderson.mota on 12/11/2014. --}}
-@extends('layout')
-@section('content')
+@extends('laravel-login::layout')
+@section('laravel-login::content')
 <div class="row">
     <div class="large-8 medium-centered columns">
         <form action="" method="post">

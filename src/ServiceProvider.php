@@ -11,6 +11,9 @@
 namespace Lqdi\LaravelLogin;
 
 use Cartalyst\Sentry\Sentry;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\View;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
@@ -18,6 +21,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
     {
         $this->package('lqdi/laravel-login', 'laravel-login', __DIR__);
         $this->app['config']->package('lqdi/laravel-login', __DIR__ . '/config');
+        View::addNamespace('laravel-login', __DIR__ . '/resources/views');
+        Lang::addNamespace('laravel-login', __DIR__ . '/lang');
+
 
         $this->app['router']->get('login', array('as' => 'authenticate', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@index'));
         $this->app['router']->post('login', array('as' => 'authenticate', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@in'));
@@ -28,13 +34,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
         $this->app['router']->get('password/reset/{token}', array('as' => 'authenticate.recover', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@defineNewPassword'));
         $this->app['router']->post('password/reset/{token}', array('as' => 'authenticate.recover', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@updatePassword'));
 
-        $this->app['router']->group(array('before' => 'auth.admin'), function() {
-            $this->app['router']->get('/', $this->app['config']->get('laravel-login::config.action_root_authenticated'));
+        $this->app['router']->group(array('before' => 'auth.laravel-login'), function() {
+            $this->app['router']->get('/', Config::get('laravel-login::config.action_root_authenticated'));
+            $this->app['router']->get('logout', array('as' => 'authenticate.out', 'uses' => 'Lqdi\\LaravelLogin\\Controllers\\AuthenticateController@out'));
         });
 
-        $this->app['router']->filter('auth.laravel-login', function ()
+        $this->app['router']->filter('auth.laravel-login', function()
         {
-            if (!Sentry::check()) {
+            if (!(new Sentry)->check()) {
                 return $this->app['redirect']->route('authenticate');
             }
         });
@@ -46,14 +53,5 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
      */
     public function register() {
 
-        $this->app['laravel-login.publish'] = $this->app->share(
-            function ($app) {
-                //Make sure the asset publisher is registered.
-                $app->register('Illuminate\Foundation\Providers\PublisherServiceProvider');
-                return new Commands\PublishCommand($app['asset.publisher']);
-            }
-        );
-
-        $this->commands('laravel-login.publish');
     }
 }

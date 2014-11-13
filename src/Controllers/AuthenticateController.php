@@ -25,10 +25,10 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
-use Cartalyst\Sentry\Sentry;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Cartalyst\Sentry\Users\Eloquent\User;
+use Cartalyst\Sentry\Sentry;
 
 class AuthenticateController extends Controller {
 
@@ -36,8 +36,7 @@ class AuthenticateController extends Controller {
 
     public function __construct()
     {
-        View::share('laravel-login::seoTitle', Lang::get('laravel-login::labels.authenticate') . " | " . Config::get('app.app_name'));
-        View::share('laravel-login::authUser', Sentry::getUser());
+        View::share('seoTitle', Lang::get('laravel-login::labels.authenticate') . " | " . Config::get('laravel-login::app_name'));
     }
 
     /**
@@ -65,7 +64,7 @@ class AuthenticateController extends Controller {
      */
     public function out()
     {
-        Sentry::logout();
+        (new Sentry)->logout();
         return Redirect::route('authenticate');
     }
 
@@ -76,12 +75,12 @@ class AuthenticateController extends Controller {
     {
         try
         {
-            Sentry::authenticate(array(
+            (new Sentry)->authenticate(array(
                 'email'    => Input::get('email'),
                 'password' => Input::get('password'),
             ), (bool) Input::get('remember'));
 
-            return Redirect::route('products.index');
+            return Redirect::action(Config::get("laravel-login::action_root_authenticated"));
         }
         catch (LoginRequiredException $e)
         {
@@ -144,7 +143,7 @@ class AuthenticateController extends Controller {
         try
         {
             /** @var User $user */
-            $user = Sentry::findUserByLogin($email);
+            $user = (new Sentry)->findUserByLogin($email);
             $token = $user->getResetPasswordCode();
 
             Mail::send('laravel-login::emails.reminder', array('token' => $token), function(Message $message) use ($email, $user)
@@ -191,7 +190,7 @@ class AuthenticateController extends Controller {
 
         try {
             /** @var User $user */
-            $user = Sentry::findUserByResetPasswordCode($token);
+            $user = (new Sentry)->findUserByResetPasswordCode($token);
 
             if (!$user->checkResetPasswordCode($token))
             {
