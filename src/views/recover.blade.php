@@ -11,8 +11,8 @@
             <input type="password" id="inputConfirmPassword" class="form-control" name="password_confirmation"/>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-lg btn-primary btn-block"><i class="fa fa-send"></i>&nbsp;{{Lang::get('laravel-login::labels.send')}}</button>
-            <a href="{{route('authenticate')}}" class="right"><i class="fa fa-angle-double-left"></i>&nbsp;{{Lang::get('laravel-login::labels.login')}}</a>
+            <button type="submit" class="btn btn-lg btn-primary btn-block"><i class="fa fa-gear"></i>&nbsp;{{Lang::get('laravel-login::labels.create_password')}}</button>
         </div>
+        <a href="{{route('authenticate')}}" class="right"><i class="fa fa-angle-double-left"></i>&nbsp;{{Lang::get('laravel-login::labels.login')}}</a>
     </form>
 @stop

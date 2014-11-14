@@ -8972,11 +8972,16 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #eee;
+  color: #444444;
 }
 
 .col-centered {
   float: none;
   margin: 0 auto;
+}
+
+.alert {
+  margin: 0 15px 0;
 }
 
 .form-signin {
@@ -8985,6 +8990,7 @@ body {
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 .form-signin .checkbox {
@@ -9011,4 +9017,12 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.box-message {
+  border-left: 4px solid #5bc0de;
+  background-color: #fff;
+  padding: 12px;
+  -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
 }

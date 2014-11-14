@@ -40,4 +40,6 @@ return array(
     'new_password'     => 'Nova Senha',
     'confirm_password' => 'Confirmar Senha',
     'mail_subject_recover_password' => 'Recuperar senha | :app_name',
+    'generate_password' => 'Gerar nova Senha',
+    'create_password' => 'Criar nova Senha',
 );

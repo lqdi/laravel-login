@@ -21,10 +21,6 @@
             <div class="row">
                 <div class="col-lg-4 col-centered">
                     @include('laravel-login::partials.messages')
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-centered">
                     @yield('laravel-login::content')
                 </div>
             </div>

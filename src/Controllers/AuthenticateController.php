@@ -166,10 +166,11 @@ class AuthenticateController extends Controller {
      */
     public function defineNewPassword($token)
     {
-        $user = (new Sentry)->findUserByResetPasswordCode($token);
+        try {
+            (new Sentry)->findUserByResetPasswordCode($token);
 
-        if (empty($user)) {
-            return Redirect::route('authenticate');
+        } catch (UserNotFoundException $e) {
+            return Redirect::route('authenticate')->withErrors(Lang::get('laravel-login::exceptions.code_could_not_be_found'));
         }
 
         return View::make('laravel-login::recover');
