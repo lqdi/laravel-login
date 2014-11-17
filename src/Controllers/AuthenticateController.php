@@ -17,18 +17,18 @@ use Cartalyst\Sentry\Users\PasswordRequiredException;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Routing\Controller;
-use Illuminate\Mail\Message;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 use Cartalyst\Sentry\Users\Eloquent\User;
 use Cartalyst\Sentry\Sentry;
+use Illuminate\Mail\Message;
+use Config;
+use Controller;
+use Input;
+use Lang;
+use Mail;
+use Redirect;
+use Request;
+use Validator;
+use View;
 
 class AuthenticateController extends Controller {
 
@@ -80,7 +80,7 @@ class AuthenticateController extends Controller {
                 'password' => Input::get('password'),
             ), (bool) Input::get('remember'));
 
-            return Redirect::action(Config::get("laravel-login::action_root_authenticated"));
+            return Redirect::route(Config::get("laravel-login::route_name_authenticated"));
         }
         catch (LoginRequiredException $e)
         {
@@ -112,6 +112,7 @@ class AuthenticateController extends Controller {
         }
         catch (\Exception $e)
         {
+            \Debugbar::addException($e);
             $message = Lang::get('laravel-login::labels.authentication_error');
         }
 
