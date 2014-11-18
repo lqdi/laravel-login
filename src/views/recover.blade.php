@@ -1,5 +1,5 @@
 {{-- Created by anderson.mota on 12/11/2014. --}}
-@extends('laravel-login::layout')
+@extends('laravel-login::layout_signin')
 @section('laravel-login::content')
     <form action="" method="post" class="form-signin">
         <div class="form-group">

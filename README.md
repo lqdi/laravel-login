@@ -14,3 +14,6 @@ app/config/packages/lqdi/laravel-login/config.php
 
 #### Filter:
 auth.laravel-login
+
+#### Route name for edit Profile:
+

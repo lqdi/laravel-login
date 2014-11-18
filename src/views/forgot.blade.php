@@ -1,5 +1,5 @@
 {{-- Created by anderson.mota on 12/11/2014. --}}
-@extends('laravel-login::layout')
+@extends('laravel-login::layout_signin')
 @section('laravel-login::content')
     <form class="form-signin" method="post">
         <p class="box-message">Digite seu nome de usuário ou endereço de email. Você receberá um link para criar uma nova senha via email.</p>

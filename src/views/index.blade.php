@@ -1,5 +1,5 @@
 {{-- Created by anderson.mota on 12/11/2014. --}}
-@extends('laravel-login::layout')
+@extends('laravel-login::layout_signin')
 @section('laravel-login::content')
     <form class="form-signin" role="form" action="{{route('authenticate')}}" method="post" accept-charset="utf-8">
         <h2 class="form-signin-heading">{{Lang::get('laravel-login::labels.login_title')}}</h2>

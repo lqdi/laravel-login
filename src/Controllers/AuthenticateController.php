@@ -15,10 +15,10 @@ use Cartalyst\Sentry\Throttling\UserSuspendedException;
 use Cartalyst\Sentry\Users\LoginRequiredException;
 use Cartalyst\Sentry\Users\PasswordRequiredException;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
-use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
+use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\Eloquent\User;
-use Cartalyst\Sentry\Sentry;
+use Lqdi\LaravelLogin\Auth;
 use Illuminate\Mail\Message;
 use Config;
 use Controller;
@@ -32,7 +32,7 @@ use View;
 
 class AuthenticateController extends Controller {
 
-    protected $layout = 'laravel-login::layout';
+    protected $layout = 'laravel-login::layout_signin';
 
     public function __construct()
     {
@@ -64,7 +64,7 @@ class AuthenticateController extends Controller {
      */
     public function out()
     {
-        (new Sentry)->logout();
+        (new Auth)->logout();
         return Redirect::route('authenticate');
     }
 
@@ -75,7 +75,7 @@ class AuthenticateController extends Controller {
     {
         try
         {
-            (new Sentry)->authenticate(array(
+            (new Auth)->authenticate(array(
                 'email'    => Input::get('email'),
                 'password' => Input::get('password'),
             ), (bool) Input::get('remember'));
@@ -112,11 +112,10 @@ class AuthenticateController extends Controller {
         }
         catch (\Exception $e)
         {
-            \Debugbar::addException($e);
             $message = Lang::get('laravel-login::labels.authentication_error');
         }
 
-        return Redirect::route('authenticate')->with('message', $message);
+        return Redirect::route('authenticate')->withErrors($message);
     }
 
     /**
@@ -144,7 +143,7 @@ class AuthenticateController extends Controller {
         try
         {
             /** @var User $user */
-            $user = (new Sentry)->findUserByLogin($email);
+            $user = (new Auth)->findUserByLogin($email);
             $token = $user->getResetPasswordCode();
 
             Mail::send('laravel-login::emails.reminder', array('token' => $token), function(Message $message) use ($email, $user)
@@ -168,7 +167,7 @@ class AuthenticateController extends Controller {
     public function defineNewPassword($token)
     {
         try {
-            (new Sentry)->findUserByResetPasswordCode($token);
+            (new Auth)->findUserByResetPasswordCode($token);
 
         } catch (UserNotFoundException $e) {
             return Redirect::route('authenticate')->withErrors(Lang::get('laravel-login::exceptions.code_could_not_be_found'));
@@ -192,7 +191,7 @@ class AuthenticateController extends Controller {
 
         try {
             /** @var User $user */
-            $user = (new Sentry)->findUserByResetPasswordCode($token);
+            $user = (new Auth)->findUserByResetPasswordCode($token);
 
             if (!$user->checkResetPasswordCode($token))
             {

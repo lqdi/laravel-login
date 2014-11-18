@@ -19,7 +19,7 @@
         <![endif]-->
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-centered">
+                <div class="col-lg-4 col-centered signin">
                     @include('laravel-login::partials.messages')
                     @yield('laravel-login::content')
                 </div>
