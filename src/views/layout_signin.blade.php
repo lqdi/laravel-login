@@ -11,15 +11,14 @@
         <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
 
         <link rel="stylesheet" href="{{asset("packages/lqdi/laravel-login/assets/css/main.css")}}">
-        <script src="{{asset("packages/lqdi/laravel-login/components/modernizr/modernizr.js")}}"></script>
     </head>
-    <body>
+    <body class="signin">
         <!--[if lt IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-centered signin">
+                <div class="col-lg-4 col-centered">
                     @include('laravel-login::partials.messages')
                     @yield('laravel-login::content')
                 </div>

@@ -38,8 +38,6 @@ class ProfileController extends Controller {
         $profile = Auth::getUser();
         $userId = $profile->getId();
 
-        \Debugbar::addMessage(Request::all());
-
         $validator = Validator::make(Request::all(), array(
             'first_name' => 'max:255',
             'email' => "required|max:255|email|unique:users,email,{$userId}",

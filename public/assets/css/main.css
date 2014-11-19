@@ -8968,6 +8968,13 @@ button.close {
     display: none !important;
   }
 }
+body.signin {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+  color: #444444;
+}
+
 .signin .alert {
   margin: 0 15px 0;
 }
@@ -9004,13 +9011,6 @@ button.close {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-}
-
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
-  color: #444444;
 }
 
 .col-centered {
