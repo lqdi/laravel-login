@@ -54,29 +54,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
      * @return void
      */
     public function register() {
-        $this->app['auth'] = $this->app->share(function($app)
-        {
-            // Once the authentication service has actually been requested by the developer
-            // we will set a variable in the application indicating such. This helps us
-            // know that we need to set any queued cookies in the after event later.
-            $app['sentry.loaded'] = true;
 
-            return new Auth(
-                $app['sentry.user'],
-                $app['sentry.group'],
-                $app['sentry.throttle'],
-                $app['sentry.session'],
-                $app['sentry.cookie'],
-                $app['request']->getClientIp()
-            );
-        });
-    }
-
-    /**
-     * @return array
-     */
-    public function provides()
-    {
-        return array('auth');
     }
 }
