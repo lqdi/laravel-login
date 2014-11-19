@@ -10,18 +10,18 @@
 
 namespace Lqdi\LaravelLogin;
 
-use Cartalyst\Sentry\Sentry;
+use Cartalyst\Sentry\Facades\Laravel\Sentry;
 
 /**
  * Class Auth
  * @package Lqdi\LaravelLogin
  *
- * @method static check()
- * @method static getUser()
- * @method static logout()
- * @method static findUserByLogin()
- * @method static findUserByResetPasswordCode()
- * @method static authenticate()
+ * @method static \Auth check()
+ * @method static \Auth getUser()
+ * @method static \Auth logout()
+ * @method static \Auth findUserByLogin()
+ * @method static \Auth findUserByResetPasswordCode()
+ * @method static \Auth authenticate()
  */
 class Auth extends Sentry {
 

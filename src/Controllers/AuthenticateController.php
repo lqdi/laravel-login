@@ -64,7 +64,7 @@ class AuthenticateController extends Controller {
      */
     public function out()
     {
-        (new Auth)->logout();
+        Auth::logout();
         return Redirect::route('authenticate');
     }
 
@@ -75,7 +75,7 @@ class AuthenticateController extends Controller {
     {
         try
         {
-            (new Auth)->authenticate(array(
+            Auth::authenticate(array(
                 'email'    => Input::get('email'),
                 'password' => Input::get('password'),
             ), (bool) Input::get('remember'));
@@ -143,7 +143,7 @@ class AuthenticateController extends Controller {
         try
         {
             /** @var User $user */
-            $user = (new Auth)->findUserByLogin($email);
+            $user = Auth::findUserByLogin($email);
             $token = $user->getResetPasswordCode();
 
             Mail::send('laravel-login::emails.reminder', array('token' => $token), function(Message $message) use ($email, $user)
@@ -167,7 +167,7 @@ class AuthenticateController extends Controller {
     public function defineNewPassword($token)
     {
         try {
-            (new Auth)->findUserByResetPasswordCode($token);
+            Auth::findUserByResetPasswordCode($token);
 
         } catch (UserNotFoundException $e) {
             return Redirect::route('authenticate')->withErrors(Lang::get('laravel-login::exceptions.code_could_not_be_found'));
@@ -191,7 +191,7 @@ class AuthenticateController extends Controller {
 
         try {
             /** @var User $user */
-            $user = (new Auth)->findUserByResetPasswordCode($token);
+            $user = Auth::findUserByResetPasswordCode($token);
 
             if (!$user->checkResetPasswordCode($token))
             {
